@@ -326,7 +326,6 @@ function getProducts() {
     //console.log('local Storage Data', ProductData);
 } //// Ending Of get Products Function 
 
-
 // intial rendering 
 renderNewProducts();
 getProducts();
