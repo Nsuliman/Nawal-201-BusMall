@@ -1,0 +1,57 @@
+
+body {
+
+    box-sizing: border-box;
+    font-family: Georgia;
+}
+
+header {
+    text-align: center;
+    border: 3px dashed white;
+    background-color: orchid;
+    color: navy;
+    border-radius: 20px;
+}
+#products-container { 
+  color: white;
+  background-color: rgb(34, 3, 56);
+}
+
+section div {
+    width: 30%;
+    float: left;
+    padding: 5px;
+    border: 10px solid navy;
+    border-radius: 20px;
+    height: 500px;
+    text-align: center; 
+    margin-left: 10px; 
+    margin-bottom: 10px;
+    background-color: white;
+    color: black;
+}
+
+  div img {
+    width: 70%;
+    margin-top: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+    height: 350px;
+  }
+
+  main h1 {
+
+    border: 5px solid navy;
+    background-color: lightseagreen;
+    text-align: center;
+    padding: 30px;
+    border-radius: 20px;
+  }
+
+  #productsTable {
+    text-align: center;
+    font-size: 20px;
+  }
+
+
+  
