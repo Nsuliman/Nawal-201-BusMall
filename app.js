@@ -16,6 +16,7 @@ AllProductsCont.all = [];                     // constructor array
 
 //console.log(' aaaalllllllll ' , AllProductsCont.all);
 
+/*
 // DOM code for ID's 
 AllProductsCont.container = document.getElementById('products-container');            // Outer container 
 
@@ -32,6 +33,7 @@ AllProductsCont.rightTitle = document.getElementById('right-product-title');    
 AllProductsCont.leftObject = null;
 AllProductsCont.middleObject = null;
 AllProductsCont.rightObject = null;
+*/
 
 // Objects intances 
 new AllProductsCont('bag', 'img/bag.jpg');
@@ -90,21 +92,39 @@ function renderNewProducts() {
     var rightProductImageElement = AllProductsCont.rightImage;
 
     // Left Product
-    leftProductImageElement.setAttribute('src', AllProductsCont.leftObject.src);
-    leftProductImageElement.setAttribute('alt', AllProductsCont.leftObject.name);
+    // leftProductImageElement.setAttribute('src', AllProductsCont.leftObject.src);
+    // leftProductImageElement.setAttribute('alt', AllProductsCont.leftObject.name);
+
+    //JQuery Format 
+    $('#left-product-image').attr('src', AllProductsCont.leftObject.src);
+    $('#left-product-image').attr('alt', AllProductsCont.leftObject.name);
 
     // Middle Product 
-    middleProductImageElement.setAttribute('src', AllProductsCont.middleObject.src);
-    middleProductImageElement.setAttribute('alt', AllProductsCont.middleObject.name);
+    // middleProductImageElement.setAttribute('src', AllProductsCont.middleObject.src);
+    // middleProductImageElement.setAttribute('alt', AllProductsCont.middleObject.name);
+
+    //JQuery Format 
+    $('#middle-product-image').attr('src', AllProductsCont.middleObject.src);
+    $('#middle-product-image').attr('alt', AllProductsCont.middleObject.name);
 
     // Right Product 
-    rightProductImageElement.setAttribute('src', AllProductsCont.rightObject.src);
-    rightProductImageElement.setAttribute('alt', AllProductsCont.rightObject.name);
+    // rightProductImageElement.setAttribute('src', AllProductsCont.rightObject.src);
+    // rightProductImageElement.setAttribute('alt', AllProductsCont.rightObject.name);
+
+    //JQuery Format 
+    $('#right-product-image').attr('src', AllProductsCont.rightObject.src);
+    $('#right-product-image').attr('alt', AllProductsCont.rightObject.name);
 
     // assign product titles 
-    AllProductsCont.leftTitle.textContent = AllProductsCont.leftObject.name;
-    AllProductsCont.middleTitle.textContent = AllProductsCont.middleObject.name
-    AllProductsCont.rightTitle.textContent = AllProductsCont.rightObject.name;
+    // AllProductsCont.leftTitle.textContent = AllProductsCont.leftObject.name;
+    // AllProductsCont.middleTitle.textContent = AllProductsCont.middleObject.name;
+    // AllProductsCont.rightTitle.textContent = AllProductsCont.rightObject.name;
+
+    //JQuery Format 
+    $('#left-product-title').text(AllProductsCont.leftObject.name);
+    $('#middle-product-title').text(AllProductsCont.middleObject.name);
+    $('#right-product-title').text(AllProductsCont.rightObject.name);
+
 
 }  // Ending render Products function 
 
@@ -119,31 +139,34 @@ function getRandomProduct() {
 // render sentences of clicking and showing images 
 function updateTotals() {
 
-    var alloutput = document.getElementById('productsTable');
-
+    // var alloutput = document.getElementById('productsTable');
     // Clear the HTML area 
-    alloutput.innerHTML = '';
+    // alloutput.innerHTML = '';
+
+    $('#productsTable').html('');
 
     for (var i = 0; i < AllProductsCont.all.length; i++) {
         var newProduct = AllProductsCont.all[i];
-        var output = addElement('output', alloutput);
-        addElement('p', output, newProduct.name + ' had ' + newProduct.clickCounter + ' votes and was shown ' + newProduct.seenCounter + ' times');
+        // var output = addElement('output', alloutput);
+        // addElement('p', output, newProduct.name + ' had ' + newProduct.clickCounter + ' votes and was shown ' + newProduct.seenCounter + ' times');
+        let output = `${newProduct.name} had ${newProduct.clickCounter} votes and was shown ${newProduct.seenCounter} times `;
+        $('#productsTable').append(`<p>${output}</p>`);
     }
 } // Ending Total Updates product function 
 
 // function for add element , esier to call and use 
-function addElement(tag, container, text) {
-    var element = document.createElement(tag);
-    container.appendChild(element);
-    if (text) {
-        element.textContent = text;
-    }
-    return element;
+// function addElement(tag, container, text) {
+//     var element = document.createElement(tag);
+//     container.appendChild(element);
+//     if (text) {
+//         element.textContent = text;
+//     }
+//     return element;
 
-} // Ending Add Element  function 
+// } // Ending Add Element  function 
 
 // the event handler 
-function clickHandler(event) {
+$('#products-container').on('click', function (event) {
 
     var clickItemId = event.target.id;
     var productChlicked;
@@ -172,18 +195,23 @@ function clickHandler(event) {
             fullChart();
 
             // remove the lister if max trails reached 25 
-            AllProductsCont.container.removeEventListener('click', clickHandler);
+            // $('#products-container').remove();
+
+            // The source for remove listener idea ==> https://www.w3schools.com/jquery/event_unbind.asp
+            $('#products-container').unbind(); // Removed the listener 
+
+            // AllProductsCont.container.removeEventListener('click', clickHandler);
             updateProducts();             /// Store the date in Local storage 
 
-            
+
         } else {
 
             renderNewProducts();
         } // Ending last else to render the new product 
     } // Ending if statement condition if clicked 
-} // Ending Click Handler function 
+}); // Ending Click Handler function 
 
-AllProductsCont.container.addEventListener('click', clickHandler);
+// AllProductsCont.container.addEventListener('click', clickHandler);
 
 
 /************************************************ Canvas Chart ********************************************************/
@@ -285,16 +313,16 @@ var localStrg = document.getElementById('productsTable');
 function updateProducts() {
     //console.log(' products length ' , AllProductsCont.all.length  );
 
-        // localStorage.clear();
-        // window.localStorage.clear();
-        if(localStorage) { // Check if the localStorage object exists
-            localStorage.clear()  //clears the localstorage
-        } 
-            // window.localStorage.removeItem("Products");
-        var productStr = JSON.stringify(AllProductsCont.all);
-        //console.log('productStr', productStr);
-        localStorage.setItem('Products', productStr);
-          
+    // localStorage.clear();
+    // window.localStorage.clear();
+    if (localStorage) { // Check if the localStorage object exists
+        localStorage.clear()  //clears the localstorage
+    }
+    // window.localStorage.removeItem("Products");
+    var productStr = JSON.stringify(AllProductsCont.all);
+    //console.log('productStr', productStr);
+    localStorage.setItem('Products', productStr);
+
 } // Ending Of Updates Products Function 
 
 // bring the date from local storage 
