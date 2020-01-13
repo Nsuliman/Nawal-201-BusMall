@@ -185,3 +185,81 @@ function AllProductsCont(name, src) {
   
   // intial rendering 
   renderNewProducts();
+
+  ////////////////////////// Canvas Chart  ////////////////////////////////
+
+var ctx = document.getElementById('busChart').getContext('2d');
+
+
+var productsNames = [];
+var productsSeen = [];
+var productsClicks = [];
+
+
+function makeProductname() {
+
+  for (var i = 0; i < AllProductsCont.all.length; i++) {         // Store the products name in array to use it in the chart 
+    var productName = AllProductsCont.all[i].name;
+    productsNames.push(productName);
+    //console.log('productsnames', productsNames);
+  }
+
+  return productsNames;
+
+}/// Ending product name function 
+
+function makeProductseen() {
+
+  for (var i = 0; i < AllProductsCont.all.length; i++) {
+    var productSeen = AllProductsCont.all[i];
+    //console.log('productClick',productClick);
+    productsSeen.push(productSeen.seenCounter);
+    //console.log('productsSeen', productsSeen);
+  }
+
+  return productsSeen;
+} /// Ending product seen function 
+
+
+//////////////////////////////////////////////
+function makeProductclick() {
+
+  for (var i = 0; i < AllProductsCont.all.length; i++) {
+    var productClick = AllProductsCont.all[i];
+    productsClicks.push(productClick.clickCounter);
+    //console.log('productsClicks', productsClicks);
+  }
+
+  return productsClicks;
+
+}/// Ending product click function 
+
+
+function fullChart()
+{
+
+  //console.log('Chart : ', Chart);
+  var chart = new Chart(ctx, {
+    type: 'bar',
+  
+    
+    data: {
+      labels: makeProductname(),
+      datasets: [
+        {
+          label: 'My First Dataset - Clicked Product Counter ',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: makeProductclick()
+        }, 
+{         label: 'My Second Dataset - Seen Product Counter ',
+          backgroundColor: 'rgb(125, 63, 170)',
+          borderColor: ' rgb(125, 63, 170)',
+          data: makeProductseen(), 
+          type: 'line'
+        }            ]  
+    },
+    options: {}
+  });
+
+}  /// ending of Fullchart Function 
