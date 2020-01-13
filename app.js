@@ -111,7 +111,7 @@ function renderNewProducts() {
 // Images random function
 function getRandomProduct() {
     var index = Math.floor(Math.random() * AllProductsCont.all.length);
-    console.log('index', index);
+    // console.log('index', index);
     return AllProductsCont.all[index];
 }  // Ending random product function 
 
@@ -173,7 +173,9 @@ function clickHandler(event) {
 
             // remove the lister if max trails reached 25 
             AllProductsCont.container.removeEventListener('click', clickHandler);
+            updateProducts();             /// Store the date in Local storage 
 
+            
         } else {
 
             renderNewProducts();
@@ -182,9 +184,6 @@ function clickHandler(event) {
 } // Ending Click Handler function 
 
 AllProductsCont.container.addEventListener('click', clickHandler);
-
-// intial rendering 
-renderNewProducts();
 
 
 /************************************************ Canvas Chart ********************************************************/
@@ -278,3 +277,59 @@ function fullChart() {
     });
 
 }  /// ending of Fullchart Function 
+
+
+/************************************************ Local Storage ********************************************************/
+var localStrg = document.getElementById('productsTable');
+
+
+function updateProducts() {
+    //console.log(' products length ' , AllProductsCont.all.length  );
+
+        // localStorage.clear();
+        // window.localStorage.clear();
+        if(localStorage) { // Check if the localStorage object exists
+            localStorage.clear()  //clears the localstorage
+        } 
+            // window.localStorage.removeItem("Products");
+        var productStr = JSON.stringify(AllProductsCont.all);
+        //console.log('productStr', productStr);
+        localStorage.setItem('Products', productStr);
+        
+        
+    
+} // Ending Of Updates Products Function 
+
+
+function getProducts() {
+    var dataP = localStorage.getItem('Products');
+    //console.log(' dataP' , dataP);
+
+    var ProductData = JSON.parse(dataP);
+    //console.log('Product data' , ProductData);
+
+    if (ProductData) {
+        //console.log('ProductData.length' , ProductData.length );
+        //console.log(' products length  2 ' , AllProductsCont.all.length  );
+
+        for (let i = 0; i < ProductData.length; i++) {
+            var rawProductObject = ProductData[i];
+            var chgProductCtrs = AllProductsCont.all[i];
+
+            chgProductCtrs.seenCounter = rawProductObject.seenCounter;
+            chgProductCtrs.clickCounter = rawProductObject.clickCounter;
+        }
+        //console.log(' products length  2 ' , AllProductsCont.all.length  );
+
+        renderNewProducts();
+    } else {
+
+        alert(' nothing here ');
+    }
+    //console.log('local Storage Data', ProductData);
+} //// Ending Of get Products Function 
+
+
+// intial rendering 
+renderNewProducts();
+getProducts();
