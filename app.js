@@ -278,11 +278,10 @@ function fullChart() {
 
 }  /// ending of Fullchart Function 
 
-
 /************************************************ Local Storage ********************************************************/
 var localStrg = document.getElementById('productsTable');
 
-
+// store data in local storage 
 function updateProducts() {
     //console.log(' products length ' , AllProductsCont.all.length  );
 
@@ -295,12 +294,10 @@ function updateProducts() {
         var productStr = JSON.stringify(AllProductsCont.all);
         //console.log('productStr', productStr);
         localStorage.setItem('Products', productStr);
-        
-        
-    
+          
 } // Ending Of Updates Products Function 
 
-
+// bring the date from local storage 
 function getProducts() {
     var dataP = localStorage.getItem('Products');
     //console.log(' dataP' , dataP);
